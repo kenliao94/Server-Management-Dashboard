@@ -1,29 +1,126 @@
 <!DOCTYPE html>
 <html ng-app="">
 <head>
+<script src= "https://code.jquery.com/jquery-1.11.3.min.js"></script><!--Jquery-->
 <link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./css/main.css">
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script><!--Angular-->
-<script src= "https://code.jquery.com/jquery-1.11.3.min.js"></script><!--Jquery-->
-<script type="text/javascript">
- <!--
-     function toggle_visibility(id) {
-        var e = document.getElementById(id);
-        if(e.style.display == 'block')
-           e.style.display = 'none';
-        else
-           e.style.display = 'block';
-     }
- //-->
-</script>
 
 </head>
 
 <body ng-controller="systemsController">
-<!--All the popup boxes-->                                                                                                      
-<link rel="import" href="./resources/popup.html">
+<!--Import pop up for explanation-->
+
+
+<div class="modal fade" id="CUSTODIANS" tabindex="-1" role="dialog" aria-labelledby="CUSTODIANS_L">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="CUSTODIANS_L">Custodians</h4>
+      </div>
+      <div class="modal-body">
+        <h3>This information comes from a list of managers identified as primary contacts </h3>
+        <table border="0">
+          <tr>
+            <td>
+              The individuals listed in this column are primary contacts for the various systems <br>Adminitrators should use Access Management to update the ownership of the IDs in the <b> ZOS-CUSTODIANS </b><br>Access Management system.
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="MIPS_M" tabindex="-1" role="dialog" aria-labelledby="MIPS_M_L">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="MIPS_M_L">MIPS</h4>
+      </div>
+      <div class="modal-body">
+        <h3>The concept of MIPS is only an approximation of the speed of a z Processor</h3>
+        <table border=0>
+          <tr>
+            <td>
+              Many factors are involved in determining how much work a z Processor can do. This figure is approximated by the folmula:<br><b> total MIPS = &LT;Service Units/SEC&GT; / 48.5 * &LT; Number of general CPUs&GT;</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="processor_info" tabindex="-1" role="dialog" aria-labelledby="processor_info_m">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="processor_info_m">{{processor.processor_model}} 's specs</h4>
+      </div>
+      <div class="modal-body">
+        <table>
+            <tr>
+              <td>Processor Type</td>
+              <td>{{processor.processor_type}}</td>
+            </tr>
+            <tr>
+              <td>Processor Model</td>
+              <td>{{processor.processor_model}}</td>
+            </tr>
+            <tr>
+              <td>Operating Model</td>
+              <td>{{processor.operating_model}}</td>
+            </tr>
+            <tr>
+              <td>Serial Number</td>
+              <td>{{processor.serial_number}}</td>
+            </tr>
+            <tr>
+              <td>I/O Definition File</td>
+              <td>{{processor.io_definition_file}}</td>
+            </tr>
+            <tr>
+              <td>HMC Network Details</td>
+              <td>{{processor.hmc_network_details}}</td>
+            </tr>
+            <tr>
+              <td>Processor Support Level ID</td>
+              <td>{{processor.processor_support_level_id}}</td>
+            </tr>
+            <tr>
+              <td>Processor Support Level Description</td>
+              <td>{{processor.processor_support_level_description}}</td>
+            </tr>
+            <tr>
+              <td>Logical Partitions</td>
+              <td>
+                <ul>
+                  <li ng-repeat="(key, value) in processor.logical_partitions">{{key}} {{value}}</li>
+                </ul>
+              </td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="container">
 <h3>&nbsp;&nbsp;z/OS Systems (at 8200 Warden)</h3> <table border=0 width=100%><tr><td align=right><a href="http://toronetx.torolab.ibm.com/www/index.html">Home</a></td></tr></table>
@@ -50,10 +147,10 @@
      <th>CPUs ONLINE</th>
      <th>TOTAL CPUs</th>
      <th>REAL STORAGE</th>
-     <th nowrap><a style="color : black;" href="javascript:void(0)" onclick="toggle_visibility('MIPS');">MIPS*</a></th>
+     <th nowrap><span id="MIPS_k">MIPS</span></th>
 <!-- <th nowrap>CPC DETAILS</th> -->
 <!-- <th nowrap>AS-AT</th> -->
-     <th nowrap><a style="color : black;" href="javascript:void(0)" onclick="toggle_visibility('CUSTODIANS');">Primary User</a></th>
+     <th nowrap><span id="primary_user">Primary Users</span></th>
      <th>Date this info updated</th>
      <!-- HEADER CELLS END   -->
     </tr>
@@ -64,7 +161,7 @@
       <td ng-bind-html="renderHtml(system.STATUS)"></td>
       <td ng-bind-html="renderHtml(system.IMGTYPE)"></td>
       <td ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
-      <td ng-bind-html="renderHtml(system.HWNAME)"></td>
+      <td ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info('HA1')"></td>
       <td ng-bind-html="renderHtml(system.OS_VERSION)"></td>
       <td ng-bind-html="renderHtml(system.IPADDRESS)"></td>
       <td ng-bind-html="renderHtml(system.IPLADDR)"></td>
@@ -99,14 +196,36 @@ so effectively, we need a source and binary set of files for this application
 -->
 <script>
 
- function systemsController($scope,$http,$sce) {
- $http.get("converted.json")
- .success(function(response) {$scope.systems = response;});
-  $scope.renderHtml = function(html_code)
- {
-     return $sce.trustAsHtml(html_code);
- };
+function systemsController($scope,$http,$sce) {
+   $http.get("./resources/converted.json").success(function(response){
+     $scope.systems = response;
+   });
+
+   $scope.renderHtml = function(html_code){
+       return $sce.trustAsHtml(html_code);
+   };
+
+   $scope.get_processor_info = function(processor){
+      var file_name = processor + ".json";
+      $http.get("./resources/processors/" + file_name).then(function(response){
+        $scope.processor = response.data;
+        console.log(response);
+        $('#processor_info').modal('show');
+      },
+      function(err){
+        console.log(err);
+      });
+   };
  }
+ //jquery code for event listener 
+ $(function(){
+    $("#MIPS_k").on("click",function(){
+      $("#MIPS_M").modal('show');
+    });
+    $("#primary_user").on("click",function(){
+      $("#CUSTODIANS").modal('show');
+    });
+ });
  </script>
 </body>
 </html>
