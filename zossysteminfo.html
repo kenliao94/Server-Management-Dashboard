@@ -130,38 +130,38 @@
   <thead>
     <tr style="background-color:lightblue;">
      <!-- HEADER CELLS START -->
-     <th nowrap>HOSTNAME</th>
-     <th nowrap>STATUS</th>
-     <th nowrap>IMAGE TYPE</th>
-     <th nowrap>LPAR NAME</th>
-     <th nowrap>PROCESSOR NAME</th>
-     <th nowrap>Z/OS VERSION</th>
-     <th nowrap>NETWORK DETAILS</th>
-     <th nowrap>IPL ADDRESS</th>
-     <th nowrap>IPL VOLUME</th>
-     <th nowrap>IPL LOAD PARMS</th>
-     <th nowrap>LAST IPL DATE</th>
-     <th nowrap>CURRENT IODF</th>
-     <th nowrap>CPU MODEL</th>
-     <th nowrap>CPU SERIAL</th>
-     <th>CPUs ONLINE</th>
-     <th>TOTAL CPUs</th>
-     <th>REAL STORAGE</th>
-     <th nowrap><span id="MIPS_k">MIPS</span></th>
+     <th nowrap ng-click="sortType='HOSTNAME';sortReverse=!sortReverse">HOSTNAME</th>
+     <th nowrap ng-click="sortType='STATUS';sortReverse=!sortReverse">STATUS</th>
+     <th nowrap ng-click="sortType='IMGTYPE';sortReverse=!sortReverse">IMAGE TYPE</th>
+     <th nowrap ng-click="sortType='LPAR_NAME';sortReverse=!sortReverse">LPAR NAME</th>
+     <th nowrap ng-click="sortType='HWNAME';sortReverse=!sortReverse">PROCESSOR NAME</th>
+     <th nowrap ng-click="sortType='OS_VERSION';sortReverse=!sortReverse">Z/OS VERSION</th>
+     <th nowrap ng-click="sortType='IPADDRESS';sortReverse=!sortReverse">NETWORK DETAILS</th>
+     <th nowrap ng-click="sortType='IPLADDR';sortReverse=!sortReverse">IPL ADDRESS</th>
+     <th nowrap ng-click="sortType='IPLVOL';sortReverse=!sortReverse">IPL VOLUME</th>
+     <th nowrap ng-click="sortType='IPLLOAD';sortReverse=!sortReverse">IPL LOAD PARMS</th>
+     <th nowrap ng-click="sortType='IPLDATE';sortReverse=!sortReverse">LAST IPL DATE</th>
+     <th nowrap ng-click="sortType='CURRENT_IODF';sortReverse=!sortReverse">CURRENT IODF</th>
+     <th nowrap ng-click="sortType='CPUMODEL';sortReverse=!sortReverse">CPU MODEL</th>
+     <th nowrap ng-click="sortType='CPUSERIAL';sortReverse=!sortReverse">CPU SERIAL</th>
+     <th ng-click="sortType='ONLCPU';sortReverse=!sortReverse">CPUs ONLINE</th>
+     <th ng-click="sortType='TOTCPU';sortReverse=!sortReverse">TOTAL CPUs</th>
+     <th ng-click="sortType='REALSTOR';sortReverse=!sortReverse">REAL STORAGE</th>
+     <th nowrap ng-click="sortType='MIPS';sortReverse=!sortReverse"><span id="MIPS_k">MIPS</span></th>
 <!-- <th nowrap>CPC DETAILS</th> -->
 <!-- <th nowrap>AS-AT</th> -->
-     <th nowrap><span id="primary_user">Primary Users</span></th>
-     <th>Date this info updated</th>
+     <th nowrap ng-click="sortType='CUSTODIAN_DETAIL';sortReverse=!sortReverse"><span id="primary_user">Primary Users</span></th>
+     <th ng-click="sortType='UPDATE';sortReverse=!sortReverse">Date this info updated</th>
      <!-- HEADER CELLS END   -->
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="system in systems | filter:searchText">
+    <tr ng-repeat="system in systems | filter:searchText | orderBy:sortType:sortReverse">
       <td ng-bind-html="renderHtml(system.HOSTNAME)"></td>
       <td ng-bind-html="renderHtml(system.STATUS)"></td>
       <td ng-bind-html="renderHtml(system.IMGTYPE)"></td>
       <td ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
-      <td ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info('HA1')"></td>
+      <td ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)"></td>
       <td ng-bind-html="renderHtml(system.OS_VERSION)"></td>
       <td ng-bind-html="renderHtml(system.IPADDRESS)"></td>
       <td ng-bind-html="renderHtml(system.IPLADDR)"></td>
@@ -216,6 +216,10 @@ function systemsController($scope,$http,$sce) {
         console.log(err);
       });
    };
+
+   //sorting table
+   $scope.sortType = "HOSTNAME";
+   $scope.sortReverse = false;
  }
  //jquery code for event listener 
  $(function(){

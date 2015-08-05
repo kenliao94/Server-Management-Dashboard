@@ -1,0 +1,11 @@
+{
+	"processor_type" : "2097",
+	"processor_model" : "E56",
+	"operating_model" : "LPAR",
+	"serial_number" : "0CF1312097",
+	"io_definition_file" : "SYS9.IODFA2",
+	"hmc_network_details" : "",
+	"processor_support_level_id" : "H080130",
+	"processor_support_level_description" : "XMP, 2097 SUPPORT",
+	"logical_partitions" : {}
+}
