@@ -1,0 +1,27 @@
+{
+	"processor_type" : "2827",
+	"processor_model" : "H89",
+	"operating_mode" : "LPAR",
+	"serial_number" : "27E9772827",
+	"io_definition_files" : "IODF.IODF70",
+	"hmc_network_details" : "IBM390PS H89B 89B",
+	"processor_support_level_id" : "H130331",
+	"processor_support_level_description" : "XMP, 2827 GA2 SUPPORT",
+	"logical_partitions" : {
+		"1" : "LB3",
+		"2" : "LABE",
+		"3" : "LABC",
+		"4" : "LABB",
+		"5" : "CAN04",
+		"6" : "NETX",
+		"7" : "LAB3",
+		"8" : "LNXG",
+		"9" : "LB9",
+		"A" : "LABS",
+		"B" : "LBA",
+		"C" : "LBB",
+		"D" : "LBC",
+		"E" : "LBD",
+		"F" : "CFCC (A coupling Facility)"
+	}
+} 

@@ -1,0 +1,25 @@
+body {
+ background-image: url(zos.gif);
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-position: -10px 15px;
+ font-size: 10px;
+ background-size: 5%;
+}
+
+body .container {
+margin-left: 50px;
+}
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+  background-color: #B2D1FF;
+}
+
+.processor_column{
+	cursor: pointer;
+}
+
+.modal{
+	font-size: larger;
+}

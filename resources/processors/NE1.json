@@ -1,0 +1,20 @@
+{
+	"processor_type" : "2964",
+	"processor_model" : "NE1",
+	"operating_model" : "LPAR",
+	"serial_number" : "23D2C72964",
+	"io_definition_file" : "IODF.IODF41",
+	"hmc_network_details" : "IBM390PS NE1 E1",
+	"processor_support_level_id" : "H150111",
+	"processor_support_level_description" : "XMP, 2964 SUPPORT",
+	"logical_partitions" : {
+		"1" : "LBC",
+		"2" : "LBD",
+		"3" : "LABF",
+		"4" : "LABC",
+		"5" : "LABQ",
+		"6" : "LABM",
+		"7" : "LNXJ",
+		"8" : "LUKY ZLINUX - TEMP LPAR F"
+	}
+}

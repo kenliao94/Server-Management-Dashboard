@@ -1,0 +1,10 @@
+{
+	"processor_type" : "2817",
+	"processor_model" : "M15",
+	"operating_model" : "LPAR",
+	"serial_number" : "264D262817",
+	"io_definition_file" : "IODF.IODF62",
+	"hmc_network_details" : "BM390PS M15 15",
+	"processor_support_level_id" : "H100331",
+	"processor_support_level_description" : "XMP, 2817 SUPPORT, SS 2, 32 CIB CF LINKS"
+}

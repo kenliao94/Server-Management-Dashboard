@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src= "https://code.jquery.com/jquery-1.11.3.min.js"></script><!--Jquery-->
+<link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> <!--Different Icons-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script><!--Angular-->
+<script src= "./js/floatThead.min.js"></script> <!--Floating Table Header-->
+</head>
+
+<body ng-controller="systemsController">
+<!--Import pop up for explanation-->
+
+
+<div class="modal fade" id="CUSTODIANS" tabindex="-1" role="dialog" aria-labelledby="CUSTODIANS_L">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="CUSTODIANS_L">Custodians</h4>
+      </div>
+      <div class="modal-body">
+        <h3>This information comes from a list of managers identified as primary contacts </h3>
+        <table border="0">
+          <tr>
+            <td>
+              The individuals listed in this column are primary contacts for the various systems <br>Adminitrators should use Access Management to update the ownership of the IDs in the <b> ZOS-CUSTODIANS </b><br>Access Management system.
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="MIPS_M" tabindex="-1" role="dialog" aria-labelledby="MIPS_M_L">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="MIPS_M_L">MIPS</h4>
+      </div>
+      <div class="modal-body">
+        <h3>The concept of MIPS is only an approximation of the speed of a z Processor</h3>
+        <table border=0>
+          <tr>
+            <td>
+              Many factors are involved in determining how much work a z Processor can do. This figure is approximated by the folmula:<br><b> total MIPS = &LT;Service Units/SEC&GT; / 48.5 * &LT; Number of general CPUs&GT;</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="processor_info" tabindex="-1" role="dialog" aria-labelledby="processor_info_m">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="processor_info_m">{{processor.processor_model}} 's specs</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <tr>
+              <td>Processor Type</td>
+              <td>{{processor.processor_type}}</td>
+            </tr>
+            <tr>
+              <td>Processor Model</td>
+              <td>{{processor.processor_model}}</td>
+            </tr>
+            <tr>
+              <td>Operating Model</td>
+              <td>{{processor.operating_model}}</td>
+            </tr>
+            <tr>
+              <td>Serial Number</td>
+              <td>{{processor.serial_number}}</td>
+            </tr>
+            <tr>
+              <td>I/O Definition File</td>
+              <td>{{processor.io_definition_file}}</td>
+            </tr>
+            <tr>
+              <td>HMC Network Details</td>
+              <td>{{processor.hmc_network_details}}</td>
+            </tr>
+            <tr>
+              <td>Processor Support Level ID</td>
+              <td>{{processor.processor_support_level_id}}</td>
+            </tr>
+            <tr>
+              <td>Processor Support Level Description</td>
+              <td>{{processor.processor_support_level_description}}</td>
+            </tr>
+            <tr>
+              <td>Logical Partitions</td>
+              <td>
+                <!--<ul>
+                  <li ng-repeat="(key, value) in processor.logical_partitions">{{key}} {{value}}</li>
+                </ul>-->
+                <tr ng-repeat="(key, value) in processor.logical_partitions">
+                  <td>{{key}}</td>
+                  <td>{{value}}</td>
+                </tr>
+              </td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+<h3>&nbsp;&nbsp;z/OS Systems (at 8200 Warden)</h3> 
+<table border=0 width=100%><tr><td align=right><a href="http://toronetx.torolab.ibm.com/www/index.html">Home</a></td></tr></table>
+
+<p style="padding-left:20px">Search: <input ng-model="searchText"></p>
+
+<!--This is the bar where the deleted column are shown to re display-->
+<div class="btn-group" role="group">
+  <button class="btn btn-default btn-sm" ng-repeat="(column,status) in display_column_set" ng-if="status == false" ng-click="toggle_column(column)">{{column}}</button>
+</div>
+<br>
+<br>
+
+<!--The table displaying stats of different machines -->
+<table class="table table-striped table-hover table-condensed table-bordered machines_table">
+  <thead>
+    <tr style="background-color:lightblue;">
+     <!-- HEADER CELLS START -->
+     <th nowrap ng-show="display_column_set.show_hostname" ng-click="sortType='HOSTNAME';sortReverse=!sortReverse">HOSTNAME <i class="fa fa-trash-o" ng-click="toggle_column('show_hostname')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_status" ng-click="sortType='STATUS';sortReverse=!sortReverse">STATUS <i class="fa fa-trash-o" ng-click="toggle_column('show_status')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_image_type" ng-click="sortType='IMGTYPE';sortReverse=!sortReverse">IMAGE TYPE <i class="fa fa-trash-o" ng-click="toggle_column('show_image_type')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_lpar_name" ng-click="sortType='LPAR_NAME';sortReverse=!sortReverse">LPAR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_lpar_name')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_processor_name" ng-click="sortType='HWNAME';sortReverse=!sortReverse">PROCESSOR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_processor_name')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_zos_versions" ng-click="sortType='OS_VERSION';sortReverse=!sortReverse">Z/OS VERSION <i class="fa fa-trash-o" ng-click="toggle_column('show_zos_versions')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_network_details" ng-click="sortType='IPADDRESS';sortReverse=!sortReverse">NETWORK DETAILS <i class="fa fa-trash-o" ng-click="toggle_column('show_network_details')"></i></th>
+
+     <th nowrap ng-show="display_column_set.show_ipl_address" ng-click="sortType='IPLADDR';sortReverse=!sortReverse">IPL ADDRESS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_address')"></i></th>
+
+     <th ng-show="display_column_set.show_ipl_volume" nowrap ng-click="sortType='IPLVOL';sortReverse=!sortReverse">IPL VOLUME <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_volume')"></i></th>
+
+     <th ng-show="display_column_set.show_ipl_load_parms"  nowrap ng-click="sortType='IPLLOAD';sortReverse=!sortReverse">IPL LOAD PARMS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_load_parms')"></i></th>
+
+     <th ng-show="display_column_set.show_last_ipl_date" nowrap ng-click="sortType='IPLDATE';sortReverse=!sortReverse">LAST IPL DATE <i class="fa fa-trash-o" ng-click="toggle_column('show_last_ipl_date')"></i></th>
+
+     <th ng-show="display_column_set.show_current_iodf" nowrap ng-click="sortType='CURRENT_IODF';sortReverse=!sortReverse">CURRENT IODF <i class="fa fa-trash-o" ng-click="toggle_column('show_current_iodf')"></i></th>
+
+     <th ng-show="display_column_set.show_cpu_model" nowrap ng-click="sortType='CPUMODEL';sortReverse=!sortReverse">CPU MODEL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_model')"></i></th>
+
+     <th ng-show="display_column_set.show_cpu_serial" nowrap ng-click="sortType='CPUSERIAL';sortReverse=!sortReverse">CPU SERIAL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_serial')"></i></th>
+
+     <th ng-show="display_column_set.show_cpus_online" nowrap ng-click="sortType='ONLCPU';sortReverse=!sortReverse">CPUs ONLINE <i class="fa fa-trash-o" ng-click="toggle_column('show_cpus_online')"></i></th>
+
+     <th ng-show="display_column_set.show_total_cpus" nowrap ng-click="sortType='TOTCPU';sortReverse=!sortReverse">TOTAL CPUs <i class="fa fa-trash-o" ng-click="toggle_column('show_total_cpus')"></i></th>
+
+     <th ng-show="display_column_set.show_real_storage" nowrap ng-click="sortType='REALSTOR';sortReverse=!sortReverse">REAL STORAGE <i class="fa fa-trash-o" ng-click="toggle_column('show_real_storage')"></i></th>
+
+     <th ng-show="display_column_set.show_mips" nowrap ng-click="sortType='MIPS';sortReverse=!sortReverse"><span id="MIPS_k">MIPS</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_mips')"></i></th>
+
+<!-- <th nowrap>CPC DETAILS</th> -->
+<!-- <th nowrap>AS-AT</th> -->
+     <th ng-show="display_column_set.show_primary_users" nowrap ng-click="sortType='CUSTODIAN_DETAIL';sortReverse=!sortReverse"><span id="primary_user">Primary Users</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_primary_users')"></i></th>
+
+     <th ng-show="display_column_set.show_update_date" ng-click="sortType='UPDATE';sortReverse=!sortReverse">Date this info updated <i class="fa fa-trash-o" ng-click="toggle_column('show_update_date')"></i></th>
+     <!-- HEADER CELLS END   -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="system in systems | filter:searchText | orderBy:sortType:sortReverse">
+      <td ng-show="display_column_set.show_hostname" ng-bind-html="renderHtml(system.HOSTNAME)"></td>
+      <td ng-show="display_column_set.show_status" ng-bind-html="renderHtml(system.STATUS)"></td>
+      <td ng-show="display_column_set.show_image_type" ng-bind-html="renderHtml(system.IMGTYPE)"></td>
+      <td ng-show="display_column_set.show_lpar_name" ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
+      <td ng-show="display_column_set.show_processor_name" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)" class="processor_column"></td>
+      <td ng-show="display_column_set.show_zos_versions" ng-bind-html="renderHtml(system.OS_VERSION)"></td>
+      <td ng-show="display_column_set.show_network_details" ng-bind-html="renderHtml(system.IPADDRESS)"></td>
+      <td ng-show="display_column_set.show_ipl_address" ng-bind-html="renderHtml(system.IPLADDR)"></td>
+      <td ng-show="display_column_set.show_ipl_volume" ng-bind-html="renderHtml(system.IPLVOL)"></td>
+      <td ng-show="display_column_set.show_ipl_load_parms" ng-bind-html="renderHtml(system.IPLLOAD)"></td>
+      <td ng-show="display_column_set.show_last_ipl_date" ng-bind-html="renderHtml(system.IPLDATE)"></td>
+      <td ng-show="display_column_set.show_current_iodf" ng-bind-html="renderHtml(system.CURRENT_IODF)"></td>
+      <td ng-show="display_column_set.show_cpu_model" ng-bind-html="renderHtml(system.CPUMODEL)"></td>
+      <td ng-show="display_column_set.show_cpu_serial" ng-bind-html="renderHtml(system.CPUSERIAL)"></td>
+      <td ng-show="display_column_set.show_cpus_online" ng-bind-html="renderHtml(system.ONLCPU)"></td>
+      <td ng-show="display_column_set.show_total_cpus" ng-bind-html="renderHtml(system.TOTCPU)"></td>
+      <td ng-show="display_column_set.show_real_storage" ng-bind-html="renderHtml(system.REALSTOR)"></td>
+      <td ng-show="display_column_set.show_mips" ng-bind-html="renderHtml(system.MIPS)"></td>
+<!--  <td ng-bind-html="renderHtml(system.CPCDETAIL)"></td> -->
+<!--  <td nowrap ng-bind-html="renderHtml(system.AS_AT)"></td> -->
+      <td ng-show="display_column_set.show_primary_users" nowrap ng-bind-html="renderHtml(system.CUSTODIAN_DETAIL)"></td>
+      <td ng-show="display_column_set.show_update_date" nowrap ng-bind-html="renderHtml(system.UPDATE)"></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<hr>
+
+<!--
+Ok, nicely awkward bit of processing here.  Although the HTML file can be in EBCDIC
+the input file (.json) has to be in ASCII.  So we have to make sure that once the
+file has been successfully created by this system,  it is passed through an
+iconv command to convert everything.
+if you are on a z/OS machine,  you'll notice that the .json file is binary.
+so effectively, we need a source and binary set of files for this application
+-->
+<script>
+
+function systemsController($scope,$http,$sce) {
+   $http.get("./resources/converted.json").success(function(response){
+     $scope.systems = response;
+   });
+
+   $scope.renderHtml = function(html_code){
+       return $sce.trustAsHtml(html_code);
+   };
+
+   $scope.get_processor_info = function(processor){
+      var file_name = processor + ".json";
+      $http.get("./resources/processors/" + file_name).then(function(response){
+        $scope.processor = response.data;
+        console.log(response);
+        $('#processor_info').modal('show');
+      },
+      function(err){
+        console.log(err);
+      });
+   };
+
+   //sorting table
+   $scope.sortType = "HOSTNAME";
+   $scope.sortReverse = false;
+
+   //implement the set that determines which column shows 
+   $scope.display_column_set = {
+          "show_hostname" : true,
+          "show_status" : true,
+          "show_image_type" : true,
+          "show_lpar_name" : true,
+          "show_processor_name" : true,
+          "show_zos_versions" : true,
+          "show_network_details" : true,
+          "show_ipl_address" : true,
+          "show_ipl_volume" : true,
+          "show_ipl_load_parms" : true, 
+          "show_last_ipl_date" : true,
+          "show_current_iodf" : true,
+          "show_cpu_model" : true,
+          "show_cpu_serial" : true,
+          "show_cpus_online" : true, 
+          "show_total_cpus" : true,
+          "show_real_storage" : true,
+          "show_mips" : true,
+          "show_primary_users" : true,
+          "show_update_date" : true
+   };
+
+    $scope.toggle_column = function(column){
+      console.log(column);
+      console.log($scope.display_column_set);
+      $scope.display_column_set[column] = !($scope.display_column_set[column]);
+      console.log("click");
+    }
+ }
+
+ //jquery code for event listener 
+ $(function(){
+    $("#MIPS_k").on("click",function(){
+      $("#MIPS_M").modal('show');
+    });
+    $("#primary_user").on("click",function(){
+      $("#CUSTODIANS").modal('show');
+    });
+    var $table = $('.machines_table');
+    $table.floatThead();
+ });
+ </script>
+</body>
+</html>

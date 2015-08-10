@@ -1,0 +1,21 @@
+{
+	"processor_type" : "2827",
+	"processor_model" : "H66",
+	"operating_model" : "LPAR",
+	"serial_number" : "27D0972827",
+	"io_definition_file" : "IODF.IODF91",
+	"hmc_network_details" : "IBM390PS H66 66",
+	"processor_support_level_id" : "H130331",
+	"processor_support_level_description" : "XMP, 2827 GA2 SUPPORT",
+	"logical_partitions" : {
+		"1" : "LABT",
+		"2" : "LNXT",
+		"3" : "CAN05",
+		"4" : "LABN",
+		"5" : "CAN06",
+		"7" : "LB7",
+		"8" : "LB1",
+		"A" : "LABU",
+		"B" : "LABV"
+	}
+}
