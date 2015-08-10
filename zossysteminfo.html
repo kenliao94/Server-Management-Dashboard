@@ -73,7 +73,6 @@
       </div>
       <div class="modal-body">
         <table class="table">
-            <tr>
               <td>Processor Type</td>
               <td>{{processor.processor_type}}</td>
             </tr>
@@ -108,9 +107,6 @@
             <tr>
               <td>Logical Partitions</td>
               <td>
-                <!--<ul>
-                  <li ng-repeat="(key, value) in processor.logical_partitions">{{key}} {{value}}</li>
-                </ul>-->
                 <tr ng-repeat="(key, value) in processor.logical_partitions">
                   <td>{{key}}</td>
                   <td>{{value}}</td>
