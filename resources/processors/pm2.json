@@ -1,0 +1,11 @@
+{
+	"Processor Type" : "Awesome Type",
+	"Processor Model" : "GM2",
+	"Operating Model" : "Awesome Mode",
+	"Serial Number" : "Fake serial number",
+	"IO Definition File" : "cool",
+	"HMC Network Details" : "GG",
+	"Processor Support Level ID" : "yes",
+	"Processor Support Level Description" : "hey",
+	"Something that PM2 has" : "Liao"
+}
