@@ -1,13 +1,13 @@
 {
-	"processor_type" : "2964",
-	"processor_model" : "N63",
-	"operating_model" : "LPAR",
-	"serial_number" : "23EA572964",
-	"io_definition_file" : "IODF.IODF81",
-	"hmc_network_details" : "IBM390PS N63 63",
-	"processor_support_level_id" : "H150111",
-	"processor_support_level_description" : "XMP, 2964 SUPPORT",
-	"logical_partitions" : {
+	"Processor Type" : "2964",
+	"Processor Model" : "N63",
+	"Operating Model" : "LPAR",
+	"Serial Number" : "23EA572964",
+	"IO Definition File" : "IODF.IODF81",
+	"HMC Network Details" : "IBM390PS N63 63",
+	"Processor Support Level ID" : "H150111",
+	"Processor Support Level Description" : "XMP, 2964 SUPPORT",
+	"Logical Partitions" : {
 		"1" : "LNXP",
 		"2" : "LABL",
 		"3" : "LABI",

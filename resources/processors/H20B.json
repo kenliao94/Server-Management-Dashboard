@@ -1,13 +1,13 @@
 {
-	"processor_type" : "2827",
-	"processor_model" : "H20",
-	"operating_model" : "LPAR",
-	"serial_number" : "24F4572827",
-	"io_definition_file" : "IODF.IODF20",
-	"hmc_network_details" : "IBM390PS H20B 20B",
-	"processor_support_level_id" : "H120331",
-	"processor_support_level_description" : "XMP, 2827 SUPPORT",
-	"logical_partitions" : {
+	"Processor Type" : "2827",
+	"Processor Model" : "H20",
+	"Operating Model" : "LPAR",
+	"Serial Number" : "24F4572827",
+	"IO Definition File" : "IODF.IODF20",
+	"HMC Network Details" : "IBM390PS H20B 20B",
+	"Processor Support Level ID" : "H120331",
+	"Processor Support Level Description" : "XMP, 2827 SUPPORT",
+	"Logical Partitions" : {
 		"1" : "LABG",
 		"2" : "LABY",
 		"3" : "LNXE"

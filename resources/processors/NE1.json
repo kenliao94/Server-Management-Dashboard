@@ -1,13 +1,13 @@
 {
-	"processor_type" : "2964",
-	"processor_model" : "NE1",
-	"operating_model" : "LPAR",
-	"serial_number" : "23D2C72964",
-	"io_definition_file" : "IODF.IODF41",
-	"hmc_network_details" : "IBM390PS NE1 E1",
-	"processor_support_level_id" : "H150111",
-	"processor_support_level_description" : "XMP, 2964 SUPPORT",
-	"logical_partitions" : {
+	"Processor Type" : "2964",
+	"Processor Model" : "NE1",
+	"Operating Model" : "LPAR",
+	"Serial Number" : "23D2C72964",
+	"IO Definition File" : "IODF.IODF41",
+	"HMC Network Details" : "IBM390PS NE1 E1",
+	"Processor Support Level ID" : "H150111",
+	"Processor Support Level Description" : "XMP, 2964 SUPPORT",
+	"Logical Partitions" : {
 		"1" : "LBC",
 		"2" : "LBD",
 		"3" : "LABF",

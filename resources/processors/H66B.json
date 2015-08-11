@@ -1,13 +1,13 @@
 {
-	"processor_type" : "2827",
-	"processor_model" : "H66",
-	"operating_model" : "LPAR",
-	"serial_number" : "02BD472827",
-	"io_definition_file" : "IODF.IODF53",
-	"hmc_network_details" : "IIBM390PS H66B 66B",
-	"processor_support_level_id" : "H130331",
-	"processor_support_level_description" : "XMP, 2827 GA2 SUPPORT",
-	"logical_partitions" : {
+	"Processor Type" : "2827",
+	"Processor Model" : "H66",
+	"Operating Model" : "LPAR",
+	"Serial Number" : "02BD472827",
+	"IO Definition File" : "IODF.IODF53",
+	"HMC Network Details" : "IIBM390PS H66B 66B",
+	"Processor Support Level ID" : "H130331",
+	"Processor Support Level Description" : "XMP, 2827 GA2 SUPPORT",
+	"Logical Partitions" : {
 		"1" : "LABM",
 		"2" : "LABW",
 		"3" : "LB8",

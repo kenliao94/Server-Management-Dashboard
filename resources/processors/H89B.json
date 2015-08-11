@@ -1,13 +1,13 @@
 {
-	"processor_type" : "2827",
-	"processor_model" : "H89",
-	"operating_mode" : "LPAR",
-	"serial_number" : "27E9772827",
-	"io_definition_files" : "IODF.IODF70",
-	"hmc_network_details" : "IBM390PS H89B 89B",
-	"processor_support_level_id" : "H130331",
-	"processor_support_level_description" : "XMP, 2827 GA2 SUPPORT",
-	"logical_partitions" : {
+	"Processor Type" : "2827",
+	"Processor Model" : "H89",
+	"Operating Mode" : "LPAR",
+	"Serial Number" : "27E9772827",
+	"IO Definition Files" : "IODF.IODF70",
+	"HMC Network Details" : "IBM390PS H89B 89B",
+	"Processor Support Level ID" : "H130331",
+	"Processor Support Level Description" : "XMP, 2827 GA2 SUPPORT",
+	"Logical Partitions" : {
 		"1" : "LB3",
 		"2" : "LABE",
 		"3" : "LABC",
