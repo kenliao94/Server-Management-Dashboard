@@ -72,8 +72,7 @@
         <h4 class="modal-title" id="processor_info_m">{{processor.processor_model}} 's specs</h4>
       </div>
       <div class="modal-body">
-        <table>
-            <tr>
+        <table class="table">
               <td>Processor Type</td>
               <td>{{processor.processor_type}}</td>
             </tr>
@@ -108,9 +107,10 @@
             <tr>
               <td>Logical Partitions</td>
               <td>
-                <ul>
-                  <li ng-repeat="(key, value) in processor.logical_partitions">{{key}} {{value}}</li>
-                </ul>
+                <tr ng-repeat="(key, value) in processor.logical_partitions">
+                  <td>{{key}}</td>
+                  <td>{{value}}</td>
+                </tr>
               </td>
             </tr>
         </table>
@@ -191,7 +191,7 @@
       <td ng-show="display_column_set.show_status" ng-bind-html="renderHtml(system.STATUS)"></td>
       <td ng-show="display_column_set.show_image_type" ng-bind-html="renderHtml(system.IMGTYPE)"></td>
       <td ng-show="display_column_set.show_lpar_name" ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
-      <td ng-show="display_column_set.show_processor_name" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)"></td>
+      <td ng-show="display_column_set.show_processor_name" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)" class="processor_column"></td>
       <td ng-show="display_column_set.show_zos_versions" ng-bind-html="renderHtml(system.OS_VERSION)"></td>
       <td ng-show="display_column_set.show_network_details" ng-bind-html="renderHtml(system.IPADDRESS)"></td>
       <td ng-show="display_column_set.show_ipl_address" ng-bind-html="renderHtml(system.IPLADDR)"></td>

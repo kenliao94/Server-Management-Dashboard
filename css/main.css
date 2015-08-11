@@ -16,3 +16,12 @@ margin-left: 50px;
 .table tbody tr:hover th {
   background-color: #B2D1FF;
 }
+
+.processor_column{
+	cursor: pointer;
+}
+
+.modal{
+	font-size: larger;
+}
+
