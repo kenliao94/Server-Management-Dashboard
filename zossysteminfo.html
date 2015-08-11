@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="">
 <head>
-<script src= "https://code.jquery.com/jquery-1.11.3.min.js"></script><!--Jquery-->
-<link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> <!--Different Icons-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src= "./js/jquery-1.11.3.min.js"></script><!--Jquery-->
+<link rel="stylesheet" href = "./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/font_awesome/css/font-awesome.min.css"> <!--Different Icons-->
+<script src="./js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./css/main.css">
-<script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script><!--Angular-->
+<script src= "./js/angular.min.js"></script><!--Angular-->
 <script src= "./js/floatThead.min.js"></script> <!--Floating Table Header-->
 </head>
 
@@ -199,11 +197,7 @@ so effectively, we need a source and binary set of files for this application
 <script>
 
 function systemsController($scope,$http,$sce) {
-   // $http.get("./resources/converted.json").success(function(response){
-   //   $scope.systems = response;
-   // });
-
-   $http.get("./resources/mock.json").success(function(response){
+   $http.get("./resources/converted.json").success(function(response){
      $scope.systems = response;
    });
 
