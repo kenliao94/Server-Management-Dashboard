@@ -2,18 +2,16 @@
 <html ng-app="">
 <head>
 <script src= "./js/jquery-1.11.3.min.js"></script><!--Jquery-->
-<link rel="stylesheet" href = "./css/bootstrap.min.css">
+<link rel="stylesheet" href = "./css/bootstrap.min.css"><!--Bootstrap for CSS style-->
 <link rel="stylesheet" href="./css/font_awesome/css/font-awesome.min.css"> <!--Different Icons-->
-<script src="./js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="./css/main.css">
+<script src="./js/bootstrap.min.js"></script><!--Bootstrap Javascript, work with Bootstrap CSS-->
+<link rel="stylesheet" href="./css/main.css"><!--Customized CSS-->
 <script src= "./js/angular.min.js"></script><!--Angular-->
 <script src= "./js/floatThead.min.js"></script> <!--Floating Table Header-->
 </head>
 
 <body ng-controller="systemsController">
-<!--Import pop up for explanation-->
-
-
+<!--Pop Up For Custodians-->
 <div class="modal fade" id="CUSTODIANS" tabindex="-1" role="dialog" aria-labelledby="CUSTODIANS_L">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -37,7 +35,7 @@
     </div>
   </div>
 </div>
-
+<!--Pop Up for what is MIPS-->
 <div class="modal fade" id="MIPS_M" tabindex="-1" role="dialog" aria-labelledby="MIPS_M_L">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -62,6 +60,7 @@
   </div>
 </div>
 
+<!--Pop Up for Processor Info-->
 <div class="modal fade" id="processor_info" tabindex="-1" role="dialog" aria-labelledby="processor_info_m">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -92,12 +91,14 @@
   </div>
 </div>
 
-
+<!--App display logic-->
 <div class="container-fluid">
-<h3>&nbsp;&nbsp;z/OS Systems (at 8200 Warden)</h3> 
-<table border=0 width=100%><tr><td align=right><a href="http://toronetx.torolab.ibm.com/www/index.html">Home</a></td></tr></table>
-
-<p style="padding-left:20px">Search: <input ng-model="searchText"></p>
+<div style="overflow:auto">
+  <img style="display:inline-text;float:left" src="./img/zos.jpg"></img>  
+  <h3>z/OS Systems (at 8200 Warden)</h3> 
+  <p style="padding-left:20px">Search: <input ng-model="searchText"></p>
+  <button class="btn btn-default btn-md" onclick="window.location.replace('http://toronetx.torolab.ibm.com/www/index.html')" style="float:right;position:relative;top:-35px;">Home</button>
+</div>
 
 <!--This is the bar where the deleted column are shown to re display-->
 <div class="btn-group" role="group">
@@ -147,8 +148,6 @@
 
      <th class="clickable" ng-show="display_column_set.show_mips" nowrap ng-click="sortType='MIPS';sortReverse=!sortReverse"><span id="MIPS_k">MIPS</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_mips')"></i></th>
 
-<!-- <th nowrap>CPC DETAILS</th> -->
-<!-- <th nowrap>AS-AT</th> -->
      <th class="clickable" ng-show="display_column_set.show_primary_users" nowrap ng-click="sortType='CUSTODIAN_DETAIL';sortReverse=!sortReverse"><span id="primary_user">Primary Users</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_primary_users')"></i></th>
 
      <th class="clickable" ng-show="display_column_set.show_update_date" ng-click="sortType='UPDATE';sortReverse=!sortReverse">Date this info updated <i class="fa fa-trash-o" ng-click="toggle_column('show_update_date')"></i></th>
@@ -158,7 +157,7 @@
   <tbody>
     <tr ng-repeat="system in systems | filter:searchText | orderBy:sortType:sortReverse">
       <td ng-show="display_column_set.show_hostname" ng-bind-html="renderHtml(system.HOSTNAME)"></td>
-      <td ng-show="display_column_set.show_status" ng-bind-html="renderHtml(system.STATUS)"></td>
+      <td ng-class="check_status(system.STATUS)" ng-show="display_column_set.show_status" ng-bind-html="renderHtml(system.STATUS)"></td>
       <td ng-show="display_column_set.show_image_type" ng-bind-html="renderHtml(system.IMGTYPE)"></td>
       <td ng-show="display_column_set.show_lpar_name" ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
       <td ng-show="display_column_set.show_processor_name" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)" class="clickable"></td>
@@ -205,6 +204,9 @@ function systemsController($scope,$http,$sce) {
        return $sce.trustAsHtml(html_code);
    };
 
+   //This is the function triggered when user clicked the field "Processor Name" and brings up the popup.
+   //What it does : It will use AJAX to retrieve the <processor name>.json which contains specs of a given processor
+   //Then it will load that data into a object called processor. Which the modal (~ line 63) will use to display the info.  
    $scope.get_processor_info = function(processor){
       var file_name = processor + ".json";
       $http.get("./resources/processors/" + file_name).then(function(response){
@@ -217,9 +219,21 @@ function systemsController($scope,$http,$sce) {
       });
    };
 
+   //A function used to determine if the data is an object or not, used with ng-if attribute.
    $scope.tf = function(things){
     console.log(things);
     return typeof(things);
+   }
+
+   //The function that is used to check if the machine is active or not. If active, load .active class in main.css,
+   //if inactive, load inactive class from main.css
+   $scope.check_status = function(status){
+      if(status == "ACTIVE"){
+        return "active";
+      }
+      else{
+        return "inactive"
+      }
    }
 
    //sorting table
@@ -250,15 +264,16 @@ function systemsController($scope,$http,$sce) {
           "show_update_date" : true
    };
 
-    $scope.toggle_column = function(column){
-      console.log(column);
-      console.log($scope.display_column_set);
-      $scope.display_column_set[column] = !($scope.display_column_set[column]);
-      console.log("click");
-    }
+    //function that display or hide given column
+  $scope.toggle_column = function(column){
+    console.log(column);
+    console.log($scope.display_column_set);
+    $scope.display_column_set[column] = !($scope.display_column_set[column]);
+    console.log("click");
+  }
  }
 
- //jquery code for event listener 
+ //jquery code for the floating table header and popup for custodians &mips
  $(function(){
     $("#MIPS_k").on("click",function(){
       $("#MIPS_M").modal('show');

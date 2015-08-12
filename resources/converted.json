@@ -1,7 +1,7 @@
 [
 {
 "HOSTNAME": "DMCMVSA",
-"STATUS": "<!-- STATUS_DMCMVSA--> <span style=\"color : #33dd33;\">ACTIVE</span>",
+"STATUS": "ACTIVE",
 "CUSTODIAN_DETAIL": "<a href=\"mailto:vilenkin@ca.ibm.com\">Vilenkin, Natalie (N.)</a>",
 "AS_AT": "735808 30 Jul 2015 _ 10:13:20",
 "UPDATE": "Thursday 2015-07-23 17:40:12.",
@@ -1027,7 +1027,7 @@
 },
 {
 "HOSTNAME": "ZOSCAN02",
-"STATUS": "<!-- STATUS_ZOSCAN02--> <span style=\"background-color : red ; color : #ffffff;\">INACTIVE</span><br> <span style=\"background-color : red ; color : #ffffff; font-size : 6pt;\"> 735808 15:14:10 </span>",
+"STATUS": "INACTIVE<br>735808 15:14:10ve",
 "CUSTODIAN_DETAIL": "<a href=\"mailto:krcrane@ca.ibm.com\">Crane, Kirk (K.R.)</a>",
 "AS_AT": "735808 30 Jul 2015 _ 10:13:48",
 "UPDATE": "Wednesday 2015-07-29 00:15:10.",
@@ -1407,7 +1407,7 @@
 },
 {
 "HOSTNAME": "TLBA04ME",
-"STATUS": "<!-- STATUS_TLBA04ME--> <span style=\"background-color : red ; color : #ffffff;\">INACTIVE</span><br> <span style=\"background-color : red ; color : #ffffff; font-size : 6pt;\"> 735808 15:14:20 </span>",
+"STATUS": "INACTIVE<br>735808 15:14:20",
 "CUSTODIAN_DETAIL": "<a href=\"mailto:jasi@ca.ibm.com\">Grewal, Jasi (J.)</a>",
 "AS_AT": "735808 30 Jul 2015 _ 10:13:22",
 "UPDATE": "Wednesday 2015-07-29 00:15:10.",
