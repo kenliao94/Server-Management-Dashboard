@@ -123,86 +123,89 @@
   <button class="btn btn-default btn-sm" ng-repeat="(column,status) in display_column_set" ng-if="status == false" ng-click="toggle_column(column)">{{column}}</button>
 </div>
 <br>
- <!-- Nav tabs -->
+<br>
+
+ <!-- Nav tabs for showing different tables-->
 <ul class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active"><a href="#t1" aria-controls="t1" role="tab" data-toggle="tab">Table 1</a></li>
-  <li role="presentation"><a href="#t2" aria-controls="t2" role="tab" data-toggle="tab">Table 2</a></li>
-  <li role="presentation"><a href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Table 3</a></li>
-  <li role="presentation"><a href="#t4" aria-controls="t4" role="tab" data-toggle="tab">Table 4</a></li>
+  <li role="presentation" class="active"><a href="#t1" aria-controls="t1" role="tab" data-toggle="tab" ng-click="change_table('t1')">Table 1</a></li>
+  <li role="presentation"><a href="#t2" aria-controls="t2" role="tab" data-toggle="tab" ng-click="change_table('t2')">Table 2</a></li>
+  <li role="presentation"><a href="#t3" aria-controls="t3" role="tab" data-toggle="tab" ng-click="change_table('t3')">Table 3</a></li>
+  <li role="presentation"><a href="#t4" aria-controls="t4" role="tab" data-toggle="tab" ng-click="change_table('t2')">Table 4</a></li>
 </ul>
 <br>
 <!--The table displaying stats of different machines -->
 <div class="tab-content">
+
 <table class="table table-striped table-hover table-condensed table-bordered machines_table">
   <thead>
     <tr style="background-color:lightblue;">
      <!-- HEADER CELLS START -->
-     <th class="clickable" nowrap ng-show="display_column_set.show_hostname" ng-click="sortType='HOSTNAME';sortReverse=!sortReverse">HOSTNAME <i class="fa fa-trash-o" ng-click="toggle_column('show_hostname')"></i> <i ng-click="pick_column_filter('HOSTNAME')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_hostname && table == 't1'" ng-click="sortType='HOSTNAME';sortReverse=!sortReverse">HOSTNAME <i class="fa fa-trash-o" ng-click="toggle_column('show_hostname')"></i> <i ng-click="pick_column_filter('HOSTNAME')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_status" ng-click="sortType='STATUS';sortReverse=!sortReverse">STATUS <i class="fa fa-trash-o" ng-click="toggle_column('show_status')"></i> <i ng-click="pick_column_filter('STATUS')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_status && table == 't1'" ng-click="sortType='STATUS';sortReverse=!sortReverse">STATUS <i class="fa fa-trash-o" ng-click="toggle_column('show_status')"></i> <i ng-click="pick_column_filter('STATUS')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_image_type" ng-click="sortType='IMGTYPE';sortReverse=!sortReverse">IMAGE TYPE <i class="fa fa-trash-o" ng-click="toggle_column('show_image_type')"></i> <i ng-click="pick_column_filter('IMGTYPE')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_image_type && table == 't1'" ng-click="sortType='IMGTYPE';sortReverse=!sortReverse">IMAGE TYPE <i class="fa fa-trash-o" ng-click="toggle_column('show_image_type')"></i> <i ng-click="pick_column_filter('IMGTYPE')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_lpar_name" ng-click="sortType='LPAR_NAME';sortReverse=!sortReverse">LPAR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_lpar_name')"></i> <i ng-click="pick_column_filter('LPAR_NAME')" class="fa fa-search"></i> </th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_lpar_name && table == 't1'" ng-click="sortType='LPAR_NAME';sortReverse=!sortReverse">LPAR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_lpar_name')"></i> <i ng-click="pick_column_filter('LPAR_NAME')" class="fa fa-search"></i> </th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_processor_name" ng-click="sortType='HWNAME';sortReverse=!sortReverse">PROCESSOR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_processor_name')"></i> <i ng-click="pick_column_filter('HWNAME')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_processor_name && table == 't1'" ng-click="sortType='HWNAME';sortReverse=!sortReverse">PROCESSOR NAME <i class="fa fa-trash-o" ng-click="toggle_column('show_processor_name')"></i> <i ng-click="pick_column_filter('HWNAME')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_zos_versions" ng-click="sortType='OS_VERSION';sortReverse=!sortReverse">Z/OS VERSION <i class="fa fa-trash-o" ng-click="toggle_column('show_zos_versions')"></i> <i ng-click="pick_column_filter('OS_VERSION')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_zos_versions && table == 't1'" ng-click="sortType='OS_VERSION';sortReverse=!sortReverse">Z/OS VERSION <i class="fa fa-trash-o" ng-click="toggle_column('show_zos_versions')"></i> <i ng-click="pick_column_filter('OS_VERSION')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_network_details" ng-click="sortType='IPADDRESS';sortReverse=!sortReverse">NETWORK DETAILS <i class="fa fa-trash-o" ng-click="toggle_column('show_network_details')"></i> <i ng-click="pick_column_filter('IPADDRESS')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_network_details && table == 't1' " ng-click="sortType='IPADDRESS';sortReverse=!sortReverse">NETWORK DETAILS <i class="fa fa-trash-o" ng-click="toggle_column('show_network_details')"></i> <i ng-click="pick_column_filter('IPADDRESS')" class="fa fa-search"></i></th>
 
-     <th class="clickable" nowrap ng-show="display_column_set.show_ipl_address" ng-click="sortType='IPLADDR';sortReverse=!sortReverse">IPL ADDRESS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_address')"></i> <i ng-click="pick_column_filter('IPLADDR')" class="fa fa-search"></i></th>
+     <th class="clickable" nowrap ng-show="display_column_set.show_ipl_address && table == 't1' " ng-click="sortType='IPLADDR';sortReverse=!sortReverse">IPL ADDRESS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_address')"></i> <i ng-click="pick_column_filter('IPLADDR')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_ipl_volume" nowrap ng-click="sortType='IPLVOL';sortReverse=!sortReverse">IPL VOLUME <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_volume')"></i> <i ng-click="pick_column_filter('IPLVOL')" class="fa fa-search"></i> </th>
+     <th class="clickable" ng-show="display_column_set.show_ipl_volume && table == 't1' " nowrap ng-click="sortType='IPLVOL';sortReverse=!sortReverse">IPL VOLUME <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_volume')"></i> <i ng-click="pick_column_filter('IPLVOL')" class="fa fa-search"></i> </th>
 
-     <th class="clickable" ng-show="display_column_set.show_ipl_load_parms"  nowrap ng-click="sortType='IPLLOAD';sortReverse=!sortReverse">IPL LOAD PARMS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_load_parms')"></i> <i ng-click="pick_column_filter('IPLLOAD')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_ipl_load_parms && table == 't1'"  nowrap ng-click="sortType='IPLLOAD';sortReverse=!sortReverse">IPL LOAD PARMS <i class="fa fa-trash-o" ng-click="toggle_column('show_ipl_load_parms')"></i> <i ng-click="pick_column_filter('IPLLOAD')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_last_ipl_date" nowrap ng-click="sortType='IPLDATE';sortReverse=!sortReverse">LAST IPL DATE <i class="fa fa-trash-o" ng-click="toggle_column('show_last_ipl_date')"></i> <i ng-click="pick_column_filter('IPLDATE')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_last_ipl_date && table == 't1'" nowrap ng-click="sortType='IPLDATE';sortReverse=!sortReverse">LAST IPL DATE <i class="fa fa-trash-o" ng-click="toggle_column('show_last_ipl_date')"></i> <i ng-click="pick_column_filter('IPLDATE')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_current_iodf" nowrap ng-click="sortType='CURRENT_IODF';sortReverse=!sortReverse">CURRENT IODF <i class="fa fa-trash-o" ng-click="toggle_column('show_current_iodf')"></i> <i ng-click="pick_column_filter('CURRENT_IODF')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_current_iodf && table == 't1'" nowrap ng-click="sortType='CURRENT_IODF';sortReverse=!sortReverse">CURRENT IODF <i class="fa fa-trash-o" ng-click="toggle_column('show_current_iodf')"></i> <i ng-click="pick_column_filter('CURRENT_IODF')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_cpu_model" nowrap ng-click="sortType='CPUMODEL';sortReverse=!sortReverse">CPU MODEL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_model')"></i> <i ng-click="pick_column_filter('CPUMODEL')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_cpu_model && table == 't1'" nowrap ng-click="sortType='CPUMODEL';sortReverse=!sortReverse">CPU MODEL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_model')"></i> <i ng-click="pick_column_filter('CPUMODEL')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_cpu_serial" nowrap ng-click="sortType='CPUSERIAL';sortReverse=!sortReverse">CPU SERIAL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_serial')"></i> <i ng-click="pick_column_filter('CPUSERIAL')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_cpu_serial && table == 't1'" nowrap ng-click="sortType='CPUSERIAL';sortReverse=!sortReverse">CPU SERIAL <i class="fa fa-trash-o" ng-click="toggle_column('show_cpu_serial')"></i> <i ng-click="pick_column_filter('CPUSERIAL')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_cpus_online" nowrap ng-click="sortType='ONLCPU';sortReverse=!sortReverse">CPUs ONLINE <i class="fa fa-trash-o" ng-click="toggle_column('show_cpus_online')"></i> <i ng-click="pick_column_filter('ONLCPU')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_cpus_online && table == 't1'" nowrap ng-click="sortType='ONLCPU';sortReverse=!sortReverse">CPUs ONLINE <i class="fa fa-trash-o" ng-click="toggle_column('show_cpus_online')"></i> <i ng-click="pick_column_filter('ONLCPU')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_total_cpus" nowrap ng-click="sortType='TOTCPU';sortReverse=!sortReverse">TOTAL CPUs <i class="fa fa-trash-o" ng-click="toggle_column('show_total_cpus')"></i> <i ng-click="pick_column_filter('TOTCPU')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_total_cpus && table == 't1'" nowrap ng-click="sortType='TOTCPU';sortReverse=!sortReverse">TOTAL CPUs <i class="fa fa-trash-o" ng-click="toggle_column('show_total_cpus')"></i> <i ng-click="pick_column_filter('TOTCPU')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_real_storage" nowrap ng-click="sortType='REALSTOR';sortReverse=!sortReverse">REAL STORAGE <i class="fa fa-trash-o" ng-click="toggle_column('show_real_storage')"></i> <i ng-click="pick_column_filter('REALSTOR')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_real_storage && table == 't1'" nowrap ng-click="sortType='REALSTOR';sortReverse=!sortReverse">REAL STORAGE <i class="fa fa-trash-o" ng-click="toggle_column('show_real_storage')"></i> <i ng-click="pick_column_filter('REALSTOR')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_mips" nowrap ng-click="sortType='MIPS';sortReverse=!sortReverse"><span id="MIPS_k">MIPS</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_mips')"></i> <i ng-click="pick_column_filter('MIPS')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_mips && table == 't1'" nowrap ng-click="sortType='MIPS';sortReverse=!sortReverse"><span id="MIPS_k">MIPS</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_mips')"></i> <i ng-click="pick_column_filter('MIPS')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_primary_users" nowrap ng-click="sortType='CUSTODIAN_DETAIL';sortReverse=!sortReverse"><span id="primary_user">Primary Users</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_primary_users')"></i> <i ng-click="pick_column_filter('CUSTODIAN_DETAIL')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_primary_users && table == 't1'" nowrap ng-click="sortType='CUSTODIAN_DETAIL';sortReverse=!sortReverse"><span id="primary_user">Primary Users</span> <i class="fa fa-trash-o" ng-click="toggle_column('show_primary_users')"></i> <i ng-click="pick_column_filter('CUSTODIAN_DETAIL')" class="fa fa-search"></i></th>
 
-     <th class="clickable" ng-show="display_column_set.show_update_date" ng-click="sortType='UPDATE';sortReverse=!sortReverse">Date this info updated <i class="fa fa-trash-o" ng-click="toggle_column('show_update_date')"></i> <i ng-click="pick_column_filter('UPDATE')" class="fa fa-search"></i></th>
+     <th class="clickable" ng-show="display_column_set.show_update_date && table == 't1'" ng-click="sortType='UPDATE';sortReverse=!sortReverse">Date this info updated <i class="fa fa-trash-o" ng-click="toggle_column('show_update_date')"></i> <i ng-click="pick_column_filter('UPDATE')" class="fa fa-search"></i></th>
      <!-- HEADER CELLS END   -->
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="system in systems | filter:searchText | filter:match_obj | orderBy:sortType:sortReverse">
-      <td ng-show="display_column_set.show_hostname" ng-bind-html="renderHtml(system.HOSTNAME)"></td>
-      <td ng-class="check_status(system.STATUS)" ng-show="display_column_set.show_status" ng-bind-html="renderHtml(system.STATUS)"></td>
-      <td ng-show="display_column_set.show_image_type" ng-bind-html="renderHtml(system.IMGTYPE)"></td>
-      <td ng-show="display_column_set.show_lpar_name" ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
-      <td ng-show="display_column_set.show_processor_name" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)" class="clickable"></td>
-      <td ng-show="display_column_set.show_zos_versions" ng-bind-html="renderHtml(system.OS_VERSION)"></td>
-      <td ng-show="display_column_set.show_network_details" ng-bind-html="renderHtml(system.IPADDRESS)"></td>
-      <td ng-show="display_column_set.show_ipl_address" ng-bind-html="renderHtml(system.IPLADDR)"></td>
-      <td ng-show="display_column_set.show_ipl_volume" ng-bind-html="renderHtml(system.IPLVOL)"></td>
-      <td ng-show="display_column_set.show_ipl_load_parms" ng-bind-html="renderHtml(system.IPLLOAD)"></td>
-      <td ng-show="display_column_set.show_last_ipl_date" ng-bind-html="renderHtml(system.IPLDATE)"></td>
-      <td ng-show="display_column_set.show_current_iodf" ng-bind-html="renderHtml(system.CURRENT_IODF)"></td>
-      <td ng-show="display_column_set.show_cpu_model" ng-bind-html="renderHtml(system.CPUMODEL)"></td>
-      <td ng-show="display_column_set.show_cpu_serial" ng-bind-html="renderHtml(system.CPUSERIAL)"></td>
-      <td ng-show="display_column_set.show_cpus_online" ng-bind-html="renderHtml(system.ONLCPU)"></td>
-      <td ng-show="display_column_set.show_total_cpus" ng-bind-html="renderHtml(system.TOTCPU)"></td>
-      <td ng-show="display_column_set.show_real_storage" ng-bind-html="renderHtml(system.REALSTOR)"></td>
-      <td ng-show="display_column_set.show_mips" ng-bind-html="renderHtml(system.MIPS)"></td>
+      <td ng-show="display_column_set.show_hostname && table == 't1'" ng-bind-html="renderHtml(system.HOSTNAME)"></td>
+      <td ng-class="check_status(system.STATUS)" ng-show="display_column_set.show_status && table == 't1'" ng-bind-html="renderHtml(system.STATUS)"></td>
+      <td ng-show="display_column_set.show_image_type && table == 't1'" ng-bind-html="renderHtml(system.IMGTYPE)"></td>
+      <td ng-show="display_column_set.show_lpar_name && table == 't1'" ng-bind-html="renderHtml(system.LPAR_NAME)"></td>
+      <td ng-show="display_column_set.show_processor_name && table == 't1'" ng-bind-html="renderHtml(system.HWNAME)" ng-click="get_processor_info(system.HWNAME)" class="clickable"></td>
+      <td ng-show="display_column_set.show_zos_versions && table == 't1'" ng-bind-html="renderHtml(system.OS_VERSION)"></td>
+      <td ng-show="display_column_set.show_network_details && table == 't1'" ng-bind-html="renderHtml(system.IPADDRESS)"></td>
+      <td ng-show="display_column_set.show_ipl_address && table == 't1'" ng-bind-html="renderHtml(system.IPLADDR)"></td>
+      <td ng-show="display_column_set.show_ipl_volume && table == 't1'" ng-bind-html="renderHtml(system.IPLVOL)"></td>
+      <td ng-show="display_column_set.show_ipl_load_parms && table == 't1'" ng-bind-html="renderHtml(system.IPLLOAD)"></td>
+      <td ng-show="display_column_set.show_last_ipl_date && table == 't1'" ng-bind-html="renderHtml(system.IPLDATE)"></td>
+      <td ng-show="display_column_set.show_current_iodf && table == 't1'" ng-bind-html="renderHtml(system.CURRENT_IODF)"></td>
+      <td ng-show="display_column_set.show_cpu_model && table == 't1'" ng-bind-html="renderHtml(system.CPUMODEL)"></td>
+      <td ng-show="display_column_set.show_cpu_serial && table == 't1'" ng-bind-html="renderHtml(system.CPUSERIAL)"></td>
+      <td ng-show="display_column_set.show_cpus_online && table == 't1'" ng-bind-html="renderHtml(system.ONLCPU)"></td>
+      <td ng-show="display_column_set.show_total_cpus && table == 't1' " ng-bind-html="renderHtml(system.TOTCPU)"></td>
+      <td ng-show="display_column_set.show_real_storage && table == 't1'" ng-bind-html="renderHtml(system.REALSTOR)"></td>
+      <td ng-show="display_column_set.show_mips && table == 't1'" ng-bind-html="renderHtml(system.MIPS)"></td>
 <!--  <td ng-bind-html="renderHtml(system.CPCDETAIL)"></td> -->
 <!--  <td nowrap ng-bind-html="renderHtml(system.AS_AT)"></td> -->
-      <td ng-show="display_column_set.show_primary_users" nowrap ng-bind-html="renderHtml(system.CUSTODIAN_DETAIL)"></td>
-      <td ng-show="display_column_set.show_update_date" nowrap ng-bind-html="renderHtml(system.UPDATE)"></td>
+      <td ng-show="display_column_set.show_primary_users && table == 't1'" nowrap ng-bind-html="renderHtml(system.CUSTODIAN_DETAIL)"></td>
+      <td ng-show="display_column_set.show_update_date && table == 't1'" nowrap ng-bind-html="renderHtml(system.UPDATE)"></td>
     </tr>
   </tbody>
 </table>
@@ -316,7 +319,13 @@ function systemsController($scope,$http,$sce,$filter) {
      $("#search_column_popup").modal('hide');
   }
 
- 
+  //table switching metadata is initiated to one 
+  $scope.table = "t1";
+
+  //function that changes which table should be displayed
+  $scope.change_table = function(table){
+    $scope.table = table;
+  }
  }
 
  //jquery code for the floating table header and popup for custodians &mips
