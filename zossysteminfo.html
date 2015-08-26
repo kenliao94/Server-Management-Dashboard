@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="./css/main.css"><!--Customized CSS-->
 <script src= "./js/angular.min.js"></script><!--Angular-->
 <script src= "./js/floatThead.min.js"></script> <!--Floating Table Header-->
+<script src= "./js/FileSaver.min.js"></script> <!--Save the export .csv-->
+<script src= "./js/Blob.js"></script>
 </head>
 
 <body ng-controller="systemsController">
@@ -115,7 +117,8 @@
   <img style="display:inline-text;float:left" src="./img/zos.jpg"></img>  
   <h3>z/OS Systems (at 8200 Warden)</h3> 
   <p style="padding-left:20px">Search: <input ng-model="searchText"></p>
-  <button class="btn btn-default btn-md" onclick="window.location.replace('http://toronetx.torolab.ibm.com/www/index.html')" style="float:right;position:relative;top:-35px;">Home</button>
+  <button class="btn btn-default btn-md" ng-click="export_to_csv()" style="float:right;position:relative;top:-35px;">Export</button>
+  <button class="btn btn-default btn-md" onclick="window.location.replace('http://toronetx.torolab.ibm.com/www/index.html')" style="float:right;position:relative;top:-35px; margin-right:15px;">Home</button>
 </div>
 
 <!--This is the bar where the deleted column are shown to re display-->
@@ -326,6 +329,42 @@ function systemsController($scope,$http,$sce,$filter) {
   $scope.change_table = function(table){
     $scope.table = table;
   }
+
+  //the export function 
+  $scope.export_to_csv = function(){
+    var objArray = $scope.systems;
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+    var row = "";
+
+    //This loop will extract the label from 1st index of on array
+    for (var index in array[0]) {
+        //Now convert each value to string and comma-seprated
+        row += index + ',';
+    }
+    row = row.slice(0, -1);
+    //append Label row with line break
+    str += row + '\r\n';
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += array[i][index];
+        }
+
+        str += line + '\r\n';
+    }
+    console.log(str);
+    //using Browser Blob API and make it downloadable
+    var blob = new Blob([str],{type:"text/csv"});
+    saveAs(blob,"table.csv");
+    return str;
+  }
+
+  //the f
+
  }
 
  //jquery code for the floating table header and popup for custodians &mips
@@ -338,8 +377,8 @@ function systemsController($scope,$http,$sce,$filter) {
     });
     var $table = $('.machines_table');
     $table.floatThead();
-    //the search column submit button click event handler
  });
+
  </script>
 </body>
 </html>
